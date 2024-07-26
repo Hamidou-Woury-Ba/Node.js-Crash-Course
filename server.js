@@ -1,17 +1,20 @@
 import http from 'http' // Importer le module http
 
-const PORT = 8000 // Définir le port sur lequel le serveur va écouter
+const PORT = process.env.PORT // Définir le port sur lequel le serveur va écouter
 
 // Créer un serveur HTTP
 const server = http.createServer((req, res) => {
-     
-    // res.setHeader('Content-Type', 'text/html') //Changer l'affichage de la réponse dans notre cas avec du html
-    // res.statusCode = 404
 
-    res.writeHead(500, { 'Content-Type' : 'text/html'})
-    // res.end(JSON.stringify({ message: 'Server Error' }))
-    
-    res.end('<h1> Hello Word </h1>') // Terminer la réponse avec un message
+    if(req.url === '/'){
+        res.writeHead(200, { 'Content-Type' : 'text/html'})
+        res.end('<h1> Homepage </h1>') // Terminer la réponse avec un message
+    }else if(req.url === '/about'){
+        res.writeHead(200, { 'Content-Type' : 'text/html'})
+        res.end('<h1> About </h1>')
+    }else{
+        res.writeHead(404, { 'Content-Type' : 'text/html'})
+        res.end('<h1> not found </h1>') 
+    }
 })
 
 // Le serveur écoute sur le port spécifié
