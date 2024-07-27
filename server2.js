@@ -30,7 +30,6 @@ const server = createServer((req, res) => {
     }else {
         res.statusCode = '404'
         res.write(JSON.stringify({message : 'Route not found'}))
-        console.log(req.url)
         res.end()
     }
 })
