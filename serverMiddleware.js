@@ -8,6 +8,11 @@ const users = [
     { id: 3, title: 'Mamadou Tahirou Ba' }
 ]
 
+/*
+ * Un middleware est une fonction dans les applications serveur qui intervient dans le         traitement des requêtes HTTP avant qu'elles n'atteignent le gestionnaire de routes final.
+    Les middlewares permettent de structurer et d'organiser le code de manière à le rendre plus maintenable et réutilisable
+ */
+
 // Middleware pour la journalisation des requêtes
 const logger = (req, res, next) => {
     console.log(`${req.method} ${req.url}`) // Affiche la méthode HTTP et l'URL de la requête dans la console
@@ -48,9 +53,12 @@ const createUserHandler = (req, res) => {
         body += chunk.toString() // Concatène chaque morceau de données reçu
     })
     req.on('end', () => {
+        console.log('Body:', body) // Affiche le contenu de la variable body
         const newUser = JSON.parse(body) // Convertit les données JSON reçues en objet
+        console.log('New User:', newUser) // Affiche le contenu de la variable newUser
         users.push(newUser) // Ajoute le nouvel utilisateur à la liste des utilisateurs
         res.statusCode = 201 // Définit le code de statut HTTP à 201 pour "Créé"
+        console.log('JSON new user : ', JSON.stringify(newUser))
         res.write(JSON.stringify(newUser)) // Convertit le nouvel utilisateur en JSON et l'envoie dans la réponse
         res.end() // Termine la réponse
     })
